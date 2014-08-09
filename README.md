@@ -24,5 +24,6 @@ Please email spencer@nautgames.com!
 ## Changelog
 #### Updated: 2014-08-09
  * Added the Random tech demo
+
 #### Updated: 2014-08-08
  * Added the NeuralNet tech demo
