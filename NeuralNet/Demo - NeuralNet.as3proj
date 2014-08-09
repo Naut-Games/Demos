@@ -82,6 +82,7 @@
     <hidden path="..\..\..\..\New Framework\Trunk\ContentPipeline\obj" />
     <hidden path="..\..\..\..\New Framework\Trunk\Framework\obj" />
     <hidden path="Properties\Modules\obj" />
+    <hidden path=".gitignore" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
@@ -89,7 +90,7 @@
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
-    <option showHiddenPaths="True" />
+    <option showHiddenPaths="False" />
     <option testMovie="Default" />
     <option testMovieCommand="Properties\\Scripts\\Run.cmd" />
   </options>
