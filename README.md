@@ -11,5 +11,5 @@ This demonstration contains a basic 3 layer feed-forward neural network that is 
 Please email spencer@nautgames.com!
 
 ## Changelog
-#### Updated: 2014-08-08)
+#### Updated: 2014-08-08
  * Added the NeuralNet tech demo
