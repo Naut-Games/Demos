@@ -29,11 +29,17 @@
  */
 package com.naut.ai
 {
+	//{ Import
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.IExternalizable;
+	//}
+	
 	/**
 	 * A basic 3 layer feedforward neural network.
 	 * @author Spencer Evans	spencer@nautgames.com
 	 */
-	public class NeuralNet 
+	public class NeuralNet implements IExternalizable
 	{
 		
 		//{ Members
@@ -142,6 +148,77 @@ package com.naut.ai
 		{
 			hiddenLayer.learn(learningRate);
 			outputLayer.learn(learningRate);
+		}
+		//}
+		
+		
+		//{ Externalization
+		/**
+		 * Reads a neural network instance from a byte stream.
+		 * @param	input	The byte stream to read from.
+		 */
+		public function readExternal(input:IDataInput):void
+		{
+			// Read in the basic properties
+			learningRate = input.readDouble();
+			
+			// Read in network size and initialize
+			var numInput:Number = input.readInt();
+			var numHidden:Number = input.readInt();
+			var numOutput:Number = input.readInt();
+			initialize(numInput, numHidden, numOutput);
+			
+			// Read in the neuron and synapse weights
+			for (var n:int = 0; n < hiddenLayer.neurons.length; ++n)
+			{
+				var neuron:Neuron = hiddenLayer.neurons[n];
+				neuron.weight = input.readDouble();
+				for (var i:int = 0; i < neuron.inputs.length; ++i)
+				{
+					neuron.inputs[i].weight = input.readDouble();
+				}
+			}
+			for (n = 0; n < outputLayer.neurons.length; ++n)
+			{
+				neuron = outputLayer.neurons[n];
+				neuron.weight = input.readDouble();
+				for (i = 0; i < neuron.inputs.length; ++i)
+				{
+					neuron.inputs[i].weight = input.readDouble();
+				}
+			}
+		}
+		
+		/**
+		 * Writes a neural network to a byte stream.
+		 * @param	output	The byte stream to write to.
+		 */
+		public function writeExternal(output:IDataOutput):void
+		{
+			output.writeDouble(learningRate);
+			
+			output.writeInt(inputLayer.neurons.length);
+			output.writeInt(hiddenLayer.neurons.length);
+			output.writeInt(outputLayer.neurons.length);
+			
+			for (var n:int = 0; n < hiddenLayer.neurons.length; ++n)
+			{
+				var neuron:Neuron = hiddenLayer.neurons[n];
+				output.writeDouble(neuron.weight);
+				for (var i:int = 0; i < neuron.inputs.length; ++i)
+				{
+					output.writeDouble(neuron.inputs[i].weight);
+				}
+			}
+			for (n = 0; n < outputLayer.neurons.length; ++n)
+			{
+				neuron = outputLayer.neurons[n];
+				output.writeDouble(neuron.weight);
+				for (i = 0; i < neuron.inputs.length; ++i)
+				{
+					output.writeDouble(neuron.inputs[i].weight);
+				}
+			}
 		}
 		//}
 		

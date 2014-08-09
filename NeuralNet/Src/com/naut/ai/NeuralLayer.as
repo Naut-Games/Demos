@@ -38,7 +38,7 @@ package com.naut.ai
 		
 		//{ Members
 		/** The set of neurons contained within this layer. */
-		private var _neurons:Vector.<Neuron>;
+		internal var neurons:Vector.<Neuron>;
 		//}
 		
 		
@@ -49,10 +49,10 @@ package com.naut.ai
 		 */
 		public function NeuralLayer(numNeurons:int)
 		{
-			_neurons = new Vector.<Neuron>(numNeurons, true);
+			neurons = new Vector.<Neuron>(numNeurons, true);
 			for (var n:int = 0; n < numNeurons; ++n) 
 			{
-				_neurons[n] = new Neuron(Math.random());
+				neurons[n] = new Neuron(Math.random());
 			}
 		}
 		
@@ -62,11 +62,11 @@ package com.naut.ai
 		 */
 		internal function connect(nextLayer:NeuralLayer):void
 		{
-			for (var i:int = 0; i < _neurons.length; ++i)
+			for (var i:int = 0; i < neurons.length; ++i)
 			{
-				for (var j:int = 0; j < nextLayer._neurons.length; ++j)
+				for (var j:int = 0; j < nextLayer.neurons.length; ++j)
 				{
-					new Synapse(_neurons[i], nextLayer._neurons[j], Math.random());
+					new Synapse(neurons[i], nextLayer.neurons[j], Math.random());
 				}
 			}
 		}
@@ -82,7 +82,7 @@ package com.naut.ai
 		{
 			for (var s:int = 0; s < signals.length; ++s)
 			{
-				_neurons[s].signal = signals[s];
+				neurons[s].signal = signals[s];
 			}
 		}
 		
@@ -92,11 +92,11 @@ package com.naut.ai
 		 */
 		internal function getSignals():Vector.<Number>
 		{
-			var out:Vector.<Number> = new Vector.<Number>(_neurons.length, true);
+			var out:Vector.<Number> = new Vector.<Number>(neurons.length, true);
 			
-			for (var n:int = 0; n < _neurons.length; ++n)
+			for (var n:int = 0; n < neurons.length; ++n)
 			{
-				out[n] = _neurons[n].signal;
+				out[n] = neurons[n].signal;
 			}
 			
 			return out;
@@ -110,9 +110,9 @@ package com.naut.ai
 		 */
 		internal function pulse():void
 		{
-			for (var n:int = 0; n < _neurons.length; ++n)
+			for (var n:int = 0; n < neurons.length; ++n)
 			{
-				_neurons[n].pulse();
+				neurons[n].pulse();
 			}
 		}
 		//}
@@ -125,9 +125,9 @@ package com.naut.ai
 		 */
 		internal function backpropagate(outputSignals:Vector.<Number>):void
 		{
-			for (var n:int = 0; n < _neurons.length; ++n)
+			for (var n:int = 0; n < neurons.length; ++n)
 			{
-				_neurons[n].backpropagate(outputSignals, n);
+				neurons[n].backpropagate(outputSignals, n);
 			}
 		}
 		
@@ -137,9 +137,9 @@ package com.naut.ai
 		 */
 		internal function learn(learningRate:Number):void
 		{
-			for (var n:int = 0; n < _neurons.length; ++n)
+			for (var n:int = 0; n < neurons.length; ++n)
 			{
-				_neurons[n].learn(learningRate);
+				neurons[n].learn(learningRate);
 			}
 		}
 		//}

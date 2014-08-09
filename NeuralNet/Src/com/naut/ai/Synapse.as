@@ -42,16 +42,16 @@ package com.naut.ai
 		internal var next:Neuron;
 		
 		/** The current weighting at this synapse, determines how the signal should be adjusted as it passes through. */
-		private var _weight:Number;
+		internal var weight:Number;
 		
 		/** The amount weight should be shifted to account for any observed error. */
 		private var _delta:Number = 0;
 		
 		/** The weighted signal coming from the previous neuron. */
-		internal function get signal():Number { return prev.signal * _weight; }
+		internal function get signal():Number { return prev.signal * weight; }
 		
 		/** The weighted error observed in the next neuron. */
-		internal function get error():Number { return next.error * _weight; }
+		internal function get error():Number { return next.error * weight; }
 		//}
 		
 		
@@ -64,7 +64,7 @@ package com.naut.ai
 		 */
 		public function Synapse(prev:Neuron, next:Neuron, weight:Number) 
 		{
-			_weight = weight;
+			this.weight = weight;
 			
 			this.prev = prev;
 			prev.outputs.push(this);
@@ -91,7 +91,7 @@ package com.naut.ai
 		 */
 		internal function learn(learningRate:Number):void
 		{
-			_weight += _delta * learningRate;
+			weight += _delta * learningRate;
 			_delta = 0;
 		}
 		//}

@@ -45,7 +45,7 @@ package com.naut.ai
 		internal var outputs:Vector.<Synapse> = new Vector.<Synapse>();
 		
 		/** The current weighting at this neuron, determines how the signal should be adjusted as it passes through. */
-		private var _weight:Number;
+		internal var weight:Number;
 		
 		/** The amount of error observed in the signal when training. */
 		internal var error:Number;
@@ -62,7 +62,7 @@ package com.naut.ai
 		 */
 		public function Neuron(weight:Number)
 		{
-			this._weight = weight;
+			this.weight = weight;
 		}
 		//}
 		
@@ -80,7 +80,7 @@ package com.naut.ai
 				var input:Synapse = inputs[i];
 				signal += input.signal;
 			}
-			signal += _weight;
+			signal += weight;
 			
 			// Normalize the signal to a valid range
 			normalize();
@@ -122,7 +122,7 @@ package com.naut.ai
 			}
 			
 			// Determine how much to shift our weight based on the error
-			_delta += error * _weight;
+			_delta += error * weight;
 			
 			// Backpropagate to each of the incoming synapses
 			for (var i:int = 0; i < inputs.length; ++i)
@@ -148,7 +148,7 @@ package com.naut.ai
 		internal function learn(learningRate:Number):void
 		{
 			// Adjust weighting based on the shifting we've noted
-			_weight += _delta * learningRate;
+			weight += _delta * learningRate;
 			_delta = 0;
 			
 			// Adjust each of the incoming synapses
