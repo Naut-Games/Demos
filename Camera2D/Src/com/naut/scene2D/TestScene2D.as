@@ -51,6 +51,12 @@ package com.naut.scene2D
 		//}
 		
 		
+		//{ Graphics
+		public var groundBmpData:BitmapData;
+		public var treeBmpData:BitmapData;
+		//}
+		
+		
 		//{ Initialization
 		public function TestScene2D() 
 		{
@@ -59,7 +65,7 @@ package com.naut.scene2D
 			addChild(midground);
 			addChild(foreground);
 			
-			// Give the midground and background a little fogginess using a white ting
+			// Give the layers some fogginess to set them apart
 			var ct:ColorTransform = background.transform.colorTransform;
 			ct.redOffset = ct.greenOffset = ct.blueOffset = 50;
 			background.transform.colorTransform = ct;
@@ -68,7 +74,7 @@ package com.naut.scene2D
 			ct.redOffset = ct.greenOffset = ct.blueOffset = 25;
 			midground.transform.colorTransform = ct;
 			
-			// Add random trees to the layers
+			// Add trees to each layer
 			for (var i:int = 0; i < 10; ++i)
 			{
 				drawTree(background);
@@ -76,60 +82,59 @@ package com.naut.scene2D
 				drawTree(foreground);
 			}
 			
-			// Draw the ground in each layer
+			// Draw the ground for each layer
 			drawGround(background);
 			drawGround(midground);
 			drawGround(foreground);
-			
-			// Cache the graphics as real bitmaps for performance
-			rasterGraphics(background);
-			rasterGraphics(midground);
-			rasterGraphics(foreground);
-		}
-		
-		
-		//{ Graphics
-		private function drawGround(layer:Sprite):void
-		{
-			var y:Number = 600 / 2 * 0.7 + 100;
-			
-			layer.graphics.beginFill(0x86942A);
-			layer.graphics.drawRect( -1500, -10 + y, 3000, 600 / 4);
-			layer.graphics.endFill();
-		}
-		
-		private function drawTree(layer:Sprite):void
-		{
-			var x:Number = Math.random() * 2800 - 1400;
-			var y:Number = 600 / 2 * 0.7 + 100;
-			
-			layer.graphics.beginFill(0xA37B45);
-			layer.graphics.drawRect( -50 + x, -200 + y, 100, 200);
-			layer.graphics.endFill();
-			
-			layer.graphics.beginFill(0x507642);
-			layer.graphics.drawCircle(0 + x, -250 + y, 75);
-			layer.graphics.endFill();
 		}
 		//}
 		
 		
-		//{ Bitmap Caching
-		private function rasterGraphics(layer:Sprite):void
+		//{ Drawing
+		private function drawGround(layer:Sprite):void
 		{
-			// Manually cache the drawing to a bitmap because large vector is expensive
-			layer.x = 1500;
-			layer.y = 600 / 2;
-			var bitmapData:BitmapData = new BitmapData(3000, 600 + 300, true, 0x00000000);
-			bitmapData.draw(layer, layer.transform.matrix);
-			var bmp:Bitmap = new Bitmap(bitmapData);
-			layer.graphics.clear();
-			layer.x = 0;
-			layer.y = 0;
+			if (groundBmpData == null)
+			{
+				var spr:Sprite = new Sprite();
+				spr.graphics.clear();
+				spr.graphics.beginFill(0x86942A);
+				spr.graphics.drawRect(0, 0, 32, 32);
+				spr.graphics.endFill();
+				
+				groundBmpData = new BitmapData(32, 32, false, 0xFF86942A);
+			}
 			
-			// Position the bitmap and add it as a child
-			bmp.x = -bitmapData.width / 2;
-			bmp.y = -bitmapData.height / 2;
+			var bmp:Bitmap = new Bitmap(groundBmpData, "auto", false);
+			
+			bmp.width = 3000;
+			bmp.height = 1080 / 2;
+			bmp.x = -1500;
+			bmp.y = 0;
+			
+			layer.addChild(bmp);
+		}
+		
+		private function drawTree(layer:Sprite):void
+		{
+			if (treeBmpData == null)
+			{
+				var spr:Sprite = new Sprite();
+				spr.graphics.clear();
+				spr.graphics.beginFill(0xA37B45);
+				spr.graphics.drawRect(12.5, 37.5, 50, 125);
+				spr.graphics.endFill();
+				spr.graphics.beginFill(0x507642);
+				spr.graphics.drawCircle(37.5, 37.5, 37.5);
+				spr.graphics.endFill();
+				
+				treeBmpData = new BitmapData(75, 162.5, true, 0x00000000);
+				treeBmpData.draw(spr);
+			}
+			
+			var bmp:Bitmap = new Bitmap(treeBmpData, "auto", false);
+			bmp.y = -160;
+			bmp.x = (Math.random() * 2800 - 1400) - 37.5;
+			
 			layer.addChild(bmp);
 		}
 		//}
