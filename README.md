@@ -34,6 +34,9 @@ This demonstration contains a basic 3 layer feed-forward neural network that is 
 Please email spencer@nautgames.com!
 
 ## Changelog
+#### Updated: 2014-12-22
+ * Added the Camera2D tech demo
+
 #### Updated: 2014-12-18
  * Added the WeakReference tech demo
 
