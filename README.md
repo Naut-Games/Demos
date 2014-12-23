@@ -10,7 +10,7 @@ You can find information about the demos detailed in the github project wiki @ h
 _Location: Demos/Camera2D_<br/>
 _Language: AS3_<br/>
 _Project Types: FlashDevelop, Flash IDE_<br/>
-This demonstration shows off a simple camera class for transforming 2 dimensional scenes easily. The camera class features positioning, rotation, zooming, and parallax capabilities. The class is relatively efficient and is suitable for real time games. We've used it in side on and top down games.
+This demonstration shows off a simple camera class for transforming 2 dimensional scenes easily. The camera class features position, rotation, zoom, and parallax capabilities. The class is relatively efficient and is suitable for real time games. We've used it in side on and top down games.
 
 ### Weak Referencing Objects
 _Location: Demos/WeakReference_<br/>
@@ -35,6 +35,7 @@ Please email spencer@nautgames.com!
 
 ## Changelog
 #### Updated: 2014-12-22
+ * Added parallax capabilities to the Camera2D demo
  * Added the Camera2D tech demo
 
 #### Updated: 2014-12-18
