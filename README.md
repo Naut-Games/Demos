@@ -6,11 +6,11 @@ This repository contains source files for technical demonstrations published by 
 ##About the Demos
 You can find information about the demos detailed in the github project wiki @ https://github.com/naut-games/demos/wiki. A brief overview of the demos is listed below.
 
-### Camera for 2D Scenes
+### Camera for 2D Scenes with Parallax
 _Location: Demos/Camera2D_<br/>
 _Language: AS3_<br/>
 _Project Types: FlashDevelop, Flash IDE_<br/>
-This demonstration shows off a simple camera class for transforming 2 dimensional scenes easily. The camera class features positioning, rotation, and zooming. The class is relatively efficient and is suitable for real time games. We've used it in side on and top down games.
+This demonstration shows off a simple camera class for transforming 2 dimensional scenes easily. The camera class features positioning, rotation, zooming, and parallax capabilities. The class is relatively efficient and is suitable for real time games. We've used it in side on and top down games.
 
 ### Weak Referencing Objects
 _Location: Demos/WeakReference_<br/>
