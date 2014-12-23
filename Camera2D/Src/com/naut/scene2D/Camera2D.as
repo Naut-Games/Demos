@@ -92,6 +92,9 @@ package com.naut.scene2D
 		
 		/** Indicates if the values of the camera have changed since the last call to calculate. */
 		private var _dirty:Boolean = false;
+		
+		/** A helper matrix used in parallax calculations. */
+		private var _parallax:Matrix = new Matrix();
 		//}
 		
 		
@@ -129,14 +132,38 @@ package com.naut.scene2D
 		
 		//{ Application
 		/**
-		 * Applies the camera's current view to the display object supplied.
+		 * Applies the camera's current view to the display object supplied. The translation of the view will be scaled
+		 * by the parallax factors supplied. A parallax of 1 leaves the view translation unaffected.
 		 * @param	scene	The scene object to apply the viewing transform to.
+		 * @param	xParallaxFactor	The ratio between normal x-axis tranlation and distant/near parallaxing layer translation.
+		 * @param	yParallaxFactor	The ratio between normal y-axis tranlation and distant/near parallaxing layer translation.
 		 */
-		public function apply(scene:DisplayObject):void
+		public function apply(scene:DisplayObject, xParallaxFactor:Number = 1, yParallaxFactor:Number = 1):void
 		{
 			if (_dirty) calculate();
 			_changed = false;
-			scene.transform.matrix = _view;
+			
+			if (xParallaxFactor == 1 && yParallaxFactor == 1)
+			{
+				scene.transform.matrix = _view;
+			}
+			else
+			{
+				// Reset the parallax matrix to identity
+				var parallax:Matrix = _parallax;
+				parallax.a = parallax.d = 1;
+				parallax.b = parallax.c = 0;
+				
+				// Set the proper parallaxed translation
+				parallax.tx = _x * (1 - xParallaxFactor);
+				parallax.ty = _y * (1 - yParallaxFactor);
+				
+				// Prepend the parallaxing translation onto the normal view translation
+				parallax.concat(_view);
+				
+				// Apply the transform to the scene
+				scene.transform.matrix = parallax;
+			}
 		}
 		//}
 		

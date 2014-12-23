@@ -45,7 +45,7 @@ package com.naut
 	/**
 	 * A simple test of manipulating the transformation of a "scene" display object via
 	 * a 2D camera class. This test displays a scene and then controls the camera view user
-	 * input.
+	 * input. The scene is comprised of three layers with some parallaxing between each layer.
 	 * @author Spencer Evans	spencer@nautgames.com
 	 */
 	public class Camera2DTest extends Sprite
@@ -97,7 +97,9 @@ package com.naut
 			camera = new Camera2D(stage.stageWidth, stage.stageHeight);
 			
 			// Apply the camera's initial transformation to the scene
-			camera.apply(scene);
+			camera.apply(scene.background, 0.5, 0.5);
+			camera.apply(scene.midground, 0.75, 0.75);
+			camera.apply(scene.foreground);
 			
 			// Listen for keyboard input and frames to update
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDown);
@@ -170,7 +172,9 @@ package com.naut
 			// Apply the new view transformation to the scene if it has changed
 			if (camera.changed)
 			{
-				camera.apply(scene);
+				camera.apply(scene.background, 0.5, 0.5);
+				camera.apply(scene.midground, 0.75, 0.75);
+				camera.apply(scene.foreground);
 			}
 		}
 		//}
